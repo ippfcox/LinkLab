@@ -5,3 +5,4 @@ E:\Self\C#\LinkLab\LinkLab\LinkLab\obj\x86\Debug\LinkLab.Properties.Resources.re
 E:\Self\C#\LinkLab\LinkLab\LinkLab\obj\x86\Debug\LinkLab.csproj.GenerateResource.Cache
 E:\Self\C#\LinkLab\LinkLab\LinkLab\obj\x86\Debug\LinkLab.exe
 E:\Self\C#\LinkLab\LinkLab\LinkLab\obj\x86\Debug\LinkLab.pdb
+E:\Self\C#\LinkLab\LinkLab\LinkLab\obj\x86\Debug\LinkLab.csprojResolveAssemblyReference.cache

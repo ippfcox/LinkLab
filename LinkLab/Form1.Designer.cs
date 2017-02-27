@@ -29,14 +29,20 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.调试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cMDSTructToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox_output = new System.Windows.Forms.PictureBox();
+            this.cAnvasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_output.SuspendLayout();
             this.panel_cmd.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_output)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_output
             // 
             this.panel_output.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_output.Controls.Add(this.pictureBox_output);
             this.panel_output.Location = new System.Drawing.Point(13, 27);
             this.panel_output.Name = "panel_output";
             this.panel_output.Size = new System.Drawing.Size(259, 86);
@@ -55,9 +61,10 @@
             // 
             // richTextBox_cmd
             // 
-            this.richTextBox_cmd.Location = new System.Drawing.Point(-1, 0);
+            this.richTextBox_cmd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_cmd.Location = new System.Drawing.Point(0, 0);
             this.richTextBox_cmd.Name = "richTextBox_cmd";
-            this.richTextBox_cmd.Size = new System.Drawing.Size(260, 131);
+            this.richTextBox_cmd.Size = new System.Drawing.Size(259, 131);
             this.richTextBox_cmd.TabIndex = 0;
             this.richTextBox_cmd.Text = "";
             this.richTextBox_cmd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_cmd_KeyDown);
@@ -75,7 +82,9 @@
             // 调试ToolStripMenuItem
             // 
             this.调试ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cMDToolStripMenuItem});
+            this.cMDToolStripMenuItem,
+            this.cMDSTructToolStripMenuItem,
+            this.cAnvasToolStripMenuItem});
             this.调试ToolStripMenuItem.Name = "调试ToolStripMenuItem";
             this.调试ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.调试ToolStripMenuItem.Text = "调试";
@@ -83,9 +92,32 @@
             // cMDToolStripMenuItem
             // 
             this.cMDToolStripMenuItem.Name = "cMDToolStripMenuItem";
-            this.cMDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cMDToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.cMDToolStripMenuItem.Text = "CMDHistory";
             this.cMDToolStripMenuItem.Click += new System.EventHandler(this.cMDToolStripMenuItem_Click);
+            // 
+            // cMDSTructToolStripMenuItem
+            // 
+            this.cMDSTructToolStripMenuItem.Name = "cMDSTructToolStripMenuItem";
+            this.cMDSTructToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.cMDSTructToolStripMenuItem.Text = "CMDSTruct";
+            this.cMDSTructToolStripMenuItem.Click += new System.EventHandler(this.cMDSTructToolStripMenuItem_Click);
+            // 
+            // pictureBox_output
+            // 
+            this.pictureBox_output.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox_output.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_output.Name = "pictureBox_output";
+            this.pictureBox_output.Size = new System.Drawing.Size(259, 86);
+            this.pictureBox_output.TabIndex = 0;
+            this.pictureBox_output.TabStop = false;
+            // 
+            // cAnvasToolStripMenuItem
+            // 
+            this.cAnvasToolStripMenuItem.Name = "cAnvasToolStripMenuItem";
+            this.cAnvasToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cAnvasToolStripMenuItem.Text = "CAnvas";
+            this.cAnvasToolStripMenuItem.Click += new System.EventHandler(this.cAnvasToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -100,9 +132,11 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panel_output.ResumeLayout(false);
             this.panel_cmd.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_output)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,6 +150,9 @@
         private System.Windows.Forms.RichTextBox richTextBox_cmd;
         private System.Windows.Forms.ToolStripMenuItem 调试ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cMDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cMDSTructToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox_output;
+        private System.Windows.Forms.ToolStripMenuItem cAnvasToolStripMenuItem;
     }
 }
 
