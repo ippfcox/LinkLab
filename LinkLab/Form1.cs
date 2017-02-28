@@ -53,19 +53,34 @@ namespace LinkLab {
                             } else if (newCMDStruct.bitmapSize.Width <= 0 || newCMDStruct.bitmapSize.Height <= 0) {
                                 OutputNote("初始化参数错误", Color.Red);
                             } else {
-                                //考虑计算窗口大小变化来执行这块，修改panel和picturebox并不会对窗口产生影响
-                                panel_output.Size = newCMDStruct.bitmapSize;
-                                pictureBox_output.Size = newCMDStruct.bitmapSize;
+                                Size sizePanel_output = new System.Drawing.Size(newCMDStruct.bitmapSize.Width + 2, newCMDStruct.bitmapSize.Height + 2);//因为修改的实际上是panel的大小而非picturebox的
+                                //窗体大小
+                                Size = new Size(Size.Width + sizePanel_output.Width - panel_output.Width, Size.Height + sizePanel_output.Height - panel_output.Height);
+                                //panel_output大小
+                                panel_output.Size = sizePanel_output;
+                                //panel_cmd位置
+                                panel_cmd.Anchor = AnchorStyles.None;
+                                panel_cmd.Location = new Point(panel_cmd.Location.X, panel_cmd.Location.Y + sizePanel_output.Height - panel_output.Height);
+                                panel_cmd.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
                                 Color foreColor = Color.Black;
                                 if (newCMDStruct.color == CMD.CMDStruct.CMDOption.S) {
                                     foreColor = newCMDStruct.currentColor;
                                 }
                                 canvas = new Canvas(newCMDStruct.bitmapSize, foreColor);
+                                pictureBox_output.Image = canvas.GetBitmap();
                                 isInited = true;
                             }
                             break;
                         case CMD.CMDStruct.CMDHead.link:
                             //具体画图操作
+                            if (newCMDStruct.points == CMD.CMDStruct.CMDOption.S) {
+                                if (newCMDStruct.color == CMD.CMDStruct.CMDOption.S) {
+                                    canvas.Link(newCMDStruct.point1, newCMDStruct.point2, newCMDStruct.currentColor);
+                                } else {
+                                    canvas.Link(newCMDStruct.point1, newCMDStruct.point2);
+                                }
+                            }
+                            RefreshPic();
                             break;
                     }
                     CMDHistory.Add(newCMD);
@@ -73,6 +88,10 @@ namespace LinkLab {
                 InitializeCMD();
             }
         }
+        private void RefreshPic() {
+            pictureBox_output.Image = canvas.GetBitmap();
+        }
+
         //输出点调试信息
         private void cMDToolStripMenuItem_Click(object sender, EventArgs e) {
             string allCMDs = "";
@@ -98,6 +117,15 @@ namespace LinkLab {
 
         private void cAnvasToolStripMenuItem_Click(object sender, EventArgs e) {
             MessageBox.Show(canvas.GetCanvasInfo());
+        }
+
+        private void sizeToolStripMenuItem_Click(object sender, EventArgs e) {
+            string allSize = "Size" + Size.ToString() + "\r\n" +
+                             "panel_output.Size" + panel_output.Size.ToString() + "\r\n" +
+                             "pictureBox_output.Size" + pictureBox_output.Size.ToString() + "\r\n" +
+                             "panel_cmd.Size" + panel_cmd.Size.ToString() + "\r\n" +
+                             "richTextBox_cmd.Size" + richTextBox_cmd.Size.ToString() + "\r\n";
+            MessageBox.Show(allSize);
         }
     }
     //命令内容相关的类
@@ -163,7 +191,7 @@ namespace LinkLab {
             for (int i = 0; i < CMDSegments.Count(); i++) {
                 CMDSegments[i] = CMDSegments[i].Trim();
             }
-            //分析命令头，这个后面可能会重写
+            //分析命令头，这个后面可能会重写//已重写
             switch (CMDSegments[0]) {
                 case "link": 
                     currentCMDStruct.head = CMDStruct.CMDHead.link;
@@ -202,16 +230,43 @@ namespace LinkLab {
     }
     public class Canvas { 
         private Bitmap bitmapOutput;
+        private Bitmap bitmapCurrent;
+        private Bitmap bitmapNew;
+
+        Size bmSize;
         private Color foreColor;
+        private Graphics gOutput;
 
         public Canvas(Size bmSize, Color fColor) {
+            this.bmSize = bmSize;
             bitmapOutput = new Bitmap(bmSize.Width, bmSize.Height);
+            bitmapCurrent = new Bitmap(bmSize.Width, bmSize.Height);
+            bitmapNew = new Bitmap(bmSize.Width, bmSize.Height);
             foreColor = fColor;
+            gOutput = Graphics.FromImage(bitmapOutput);
         }
         public string GetCanvasInfo() {
             string info = bitmapOutput.Size.ToString() + "\r\n" +
                             foreColor.ToString();
             return info;
+        }
+        public Bitmap GetBitmap() {
+            StackBms();
+            return bitmapOutput;
+        }
+        //连接命令
+        public void Link(Point point1, Point point2, Color foreColor) {
+            bitmapNew = new Bitmap(bmSize.Width, bmSize.Height);
+            Graphics gNew = Graphics.FromImage(bitmapNew);
+            Pen pen = new Pen(foreColor, 1f);
+            gNew.DrawLine(pen, point1, point2);
+        }
+        public void Link(Point point1, Point point2) {
+            Link(point1, point2, foreColor);
+        }
+        private void StackBms() {
+            gOutput.DrawImage(bitmapCurrent, new Point(0, 0));
+            gOutput.DrawImage(bitmapNew, new Point(0, 0));
         }
     }
 }
